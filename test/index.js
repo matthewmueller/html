@@ -50,6 +50,16 @@ describe('html plugin', function () {
     })
   })
 
+  it('should only add dependencies once', function () {
+    let root = fixture('duplicate')
+    let entry = fixture('duplicate/index.html')
+    let builder = mako({ root }).use(plugins())
+
+    return builder.build(entry).then(function (build) {
+      assert.equal(build.tree.size(), 3)
+    })
+  })
+
   context('with options', function () {
     describe('.css', function () {
       it('should not add css dependencies', function () {
