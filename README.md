@@ -7,6 +7,7 @@
 [![coverage](https://img.shields.io/coveralls/makojs/html.svg)](https://coveralls.io/github/makojs/html)
 [![npm dependencies](https://img.shields.io/david/makojs/html.svg)](https://david-dm.org/makojs/html)
 [![npm dev dependencies](https://img.shields.io/david/dev/makojs/html.svg)](https://david-dm.org/makojs/html#info=devDependencies)
+[![code style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 ## Purpose
 
