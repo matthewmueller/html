@@ -2,9 +2,11 @@
 
 let debug = require('debug')('mako-html')
 let defaults = require('defaults')
+let extract = require('deps-html')
 let isUrl = require('is-url')
-let jsdom = require('jsdom')
+let parse5 = require('parse5-utils')
 let path = require('path')
+let utils = require('mako-utils')
 
 module.exports = function (options) {
   debug('initialize %j', options)
@@ -18,26 +20,32 @@ module.exports = function (options) {
   }
 
   function dependencies (file, build) {
-    let document = jsdom.jsdom(file.contents.toString())
+    debug('parsing %s', utils.relative(file.path))
+    let ast = parse5.parse(file.contents.toString())
+    let deps = extract(ast)
     let tree = build.tree
 
-    if (config.js) {
-      Array.from(document.querySelectorAll('script[src]'))
-        .filter(script => !isUrl(script.src))
-        .forEach(script => addDependency(script.src))
-    }
+    debug('%d dependencies found:', deps.length)
+    deps
+      .filter(inspectDependency)
+      .forEach(addDependency)
 
-    if (config.css) {
-      Array.from(document.querySelectorAll('link[rel=stylesheet]'))
-        .filter(link => !isUrl(link.href))
-        .forEach(link => addDependency(link.href))
-    }
-
-    function addDependency (rel) {
-      let dep = path.resolve(file.dirname, rel)
-      let depFile = tree.findFile(dep)
-      if (!depFile) depFile = tree.addFile(dep)
+    function addDependency (dep) {
+      debug('+ %s (%s)', dep.path, dep.type)
+      let abs = path.resolve(file.dirname, dep.path)
+      let depFile = tree.findFile(abs)
+      if (!depFile) depFile = tree.addFile(abs)
       file.addDependency(depFile)
+    }
+  }
+
+  function inspectDependency (dep) {
+    debug('> %s (%s)', dep.path, dep.type)
+    if (isUrl(dep.path)) return false
+    switch (dep.type) {
+    case 'script': return config.js
+    case 'stylesheet': return config.css
+    default: return false
     }
   }
 }
