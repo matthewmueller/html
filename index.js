@@ -43,9 +43,9 @@ module.exports = function (options) {
     debug('> %s (%s)', dep.path, dep.type)
     if (isUrl(dep.path)) return false
     switch (dep.type) {
-    case 'script': return config.js
-    case 'stylesheet': return config.css
-    default: return false
+      case 'script': return config.js
+      case 'stylesheet': return config.css
+      default: return false
     }
   }
 }
