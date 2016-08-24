@@ -28,7 +28,7 @@
     "mako": "^0.12.0",
     "mako-buffer": "^0.11.2",
     "mocha": "^3.0.0",
-    "standard": "^7.1.2"
+    "standard": "^8.0.0"
   },
   "scripts": {
     "lint": "standard",
