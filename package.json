@@ -17,7 +17,7 @@
     "defaults": "^1.0.3",
     "deps-html": "^2.2.0",
     "is-url": "^1.2.1",
-    "mako-utils": "0.0.2",
+    "mako-utils": "0.1.0",
     "parse5-utils": "^1.4.1"
   },
   "devDependencies": {
