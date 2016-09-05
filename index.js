@@ -15,11 +15,11 @@ module.exports = function (options) {
     js: true
   })
 
-  return function html (mako) {
-    mako.dependencies('html', dependencies)
+  return function (mako) {
+    mako.dependencies('html', html)
   }
 
-  function dependencies (file, build) {
+  function html (file, build) {
     debug('parsing %s', utils.relative(file.path))
     let ast = parse5.parse(file.contents.toString())
     let deps = extract(ast)

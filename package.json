@@ -9,7 +9,7 @@
   "repository": "makojs/html",
   "license": "MIT",
   "peerDependencies": {
-    "mako": "^0.12.0"
+    "mako": "^0.13.0"
   },
   "dependencies": {
     "cwp": "^1.0.0",
@@ -25,8 +25,8 @@
     "chai-as-promised": "^5.1.0",
     "istanbul": "^0.4.3",
     "istanbul-coveralls": "^1.0.3",
-    "mako": "^0.12.0",
-    "mako-buffer": "^0.11.2",
+    "mako": "^0.13.0",
+    "mako-buffer": "^0.12.0",
     "mocha": "^3.0.0",
     "standard": "^8.0.0"
   },
