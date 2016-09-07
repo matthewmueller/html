@@ -2,8 +2,8 @@
 
 'use strict'
 
-let buffer = require('mako-buffer')
 let chai = require('chai')
+let fs = require('fs')
 let html = require('..')
 let mako = require('mako')
 let path = require('path')
@@ -14,48 +14,46 @@ let fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
 describe('html plugin', function () {
   it('should detect js dependencies', function () {
-    let root = fixture('simple')
-    let entry = fixture('simple/index.html')
-    let js = fixture('simple/index.js')
-    let builder = mako({ root }).use(plugins())
+    let runner = mako({ root: fixture('simple') }).use(html())
+    let entry = runner.tree.addFile(fixture('simple/index.html'))
+    entry.contents = fs.readFileSync(entry.path)
 
-    return builder.build(entry).then(function (build) {
-      let htmlFile = build.tree.findFile(entry)
-      let jsFile = build.tree.findFile(js)
-      assert.isTrue(htmlFile.hasDependency(jsFile))
+    return runner.build(entry).then(function (build) {
+      let file = build.tree.findFile(entry.path)
+      let deps = file.dependencies().filter(file => file.type === 'js')
+      assert.lengthOf(deps, 1)
     })
   })
 
   it('should detect css dependencies', function () {
-    let root = fixture('simple')
-    let entry = fixture('simple/index.html')
-    let css = fixture('simple/index.css')
-    let builder = mako({ root }).use(plugins())
+    let runner = mako({ root: fixture('simple') }).use(html())
+    let entry = runner.tree.addFile(fixture('simple/index.html'))
+    entry.contents = fs.readFileSync(entry.path)
 
-    return builder.build(entry).then(function (build) {
-      let htmlFile = build.tree.findFile(entry)
-      let cssFile = build.tree.findFile(css)
-      assert.isTrue(htmlFile.hasDependency(cssFile))
+    return runner.build(entry).then(function (build) {
+      let file = build.tree.findFile(entry.path)
+      let deps = file.dependencies().filter(file => file.type === 'css')
+      assert.lengthOf(deps, 1)
     })
   })
 
   it('should ignore absolute urls', function () {
-    let root = fixture('absolute-urls')
-    let entry = fixture('absolute-urls/index.html')
-    let builder = mako({ root }).use(plugins())
+    let runner = mako({ root: fixture('absolute-urls') }).use(html())
+    let entry = runner.tree.addFile(fixture('absolute-urls/index.html'))
+    entry.contents = fs.readFileSync(entry.path)
 
-    return builder.build(entry).then(function (build) {
-      let file = build.tree.findFile(entry)
+    return runner.build(entry).then(function (build) {
+      let file = build.tree.findFile(entry.path)
       assert.lengthOf(file.dependencies(), 0)
     })
   })
 
   it('should only add dependencies once', function () {
-    let root = fixture('duplicate')
-    let entry = fixture('duplicate/index.html')
-    let builder = mako({ root }).use(plugins())
+    let runner = mako({ root: fixture('duplicate') }).use(html())
+    let entry = runner.tree.addFile(fixture('duplicate/index.html'))
+    entry.contents = fs.readFileSync(entry.path)
 
-    return builder.build(entry).then(function (build) {
+    return runner.build(entry).then(function (build) {
       assert.equal(build.tree.size(), 3)
     })
   })
@@ -63,36 +61,30 @@ describe('html plugin', function () {
   context('with options', function () {
     describe('.css', function () {
       it('should not add css dependencies', function () {
-        let root = fixture('simple')
-        let entry = fixture('simple/index.html')
-        let css = fixture('simple/index.css')
-        let builder = mako({ root }).use(plugins({ css: false }))
+        let runner = mako({ root: fixture('simple') }).use(html({ css: false }))
+        let entry = runner.tree.addFile(fixture('simple/index.html'))
+        entry.contents = fs.readFileSync(entry.path)
 
-        return builder.build(entry).then(function (build) {
-          let htmlFile = build.tree.findFile(entry)
-          let cssFile = build.tree.findFile(css)
-          assert.isFalse(htmlFile.hasDependency(cssFile))
+        return runner.build(entry).then(function (build) {
+          let file = build.tree.findFile(entry.path)
+          let deps = file.dependencies().filter(file => file.type === 'css')
+          assert.lengthOf(deps, 0)
         })
       })
     })
 
     describe('.js', function () {
       it('should not add js dependencies', function () {
-        let root = fixture('simple')
-        let entry = fixture('simple/index.html')
-        let js = fixture('simple/index.js')
-        let builder = mako({ root }).use(plugins({ js: false }))
+        let runner = mako({ root: fixture('simple') }).use(html({ js: false }))
+        let entry = runner.tree.addFile(fixture('simple/index.html'))
+        entry.contents = fs.readFileSync(entry.path)
 
-        return builder.build(entry).then(function (build) {
-          let htmlFile = build.tree.findFile(entry)
-          let jsFile = build.tree.findFile(js)
-          assert.isFalse(htmlFile.hasDependency(jsFile))
+        return runner.build(entry).then(function (build) {
+          let file = build.tree.findFile(entry.path)
+          let deps = file.dependencies().filter(file => file.type === 'js')
+          assert.lengthOf(deps, 0)
         })
       })
     })
   })
 })
-
-function plugins (options) {
-  return [ buffer('html'), html(options) ]
-}
