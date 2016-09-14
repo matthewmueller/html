@@ -11,19 +11,18 @@
 
 ## Purpose
 
-Parses an HTML file (using [jsdom](https://github.com/tmpvar/jsdom)), adding to the dependency tree:
+Parses HTML using [deps-html](https://bitbucket.org/jongleberry/deps-html),
+adding external resources to the dependency tree. Currently, the supported
+resources include:
 
- - CSS
-   - query the DOM for `link[rel=stylesheet]`
-   - filter out absolute urls
-   - resolve the `href` relative to the html file's directory
- - JS
-   - query the DOM for `script[src]`
-   - filter out absolute urls
-   - resolve the `src` relative to the html file's directory
+ - scripts (via `script[src]`)
+ - stylesheets (via `link[rel="stylesheet"]`)
+ - images (via `img[src]`)
 
-This plugin only adds the aforementioned files to the dependency tree, the rest of the build logic is deferred
-to other plugins. (eg: [mako-js](https://github.com/makojs/js), [mako-css](https://github.com/makojs/css))
+This plugin only adds the aforementioned files to the dependency tree, the rest
+of the build logic is deferred to other plugins, such as
+[mako-js](https://github.com/makojs/js) and
+[mako-css](https://github.com/makojs/css).
 
 ## API
 
@@ -31,5 +30,6 @@ to other plugins. (eg: [mako-js](https://github.com/makojs/js), [mako-css](https
 
 Initializes the plugin, available `options` include:
 
- - `css` whether or not to parse CSS dependencies (default: `true`)
- - `js` whether or not to parse JS dependencies (default: `true`)
+ - `images` whether or not to process image dependencies (default: `true`)
+ - `stylesheets` whether or not to process stylesheet dependencies (default: `true`)
+ - `scripts` whether or not to process script dependencies (default: `true`)
