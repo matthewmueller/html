@@ -2,7 +2,7 @@
 
 let debug = require('debug')('mako-html')
 let defaults = require('defaults')
-let extract = require('deps-html')
+let deps = require('deps-html')
 let isUrl = require('is-url')
 let parse5 = require('parse5-utils')
 let path = require('path')
@@ -11,8 +11,9 @@ let utils = require('mako-utils')
 module.exports = function (options) {
   debug('initialize %j', options)
   let config = defaults(options, {
-    css: true,
-    js: true
+    images: true,
+    scripts: true,
+    stylesheets: true
   })
 
   return function (mako) {
@@ -22,11 +23,11 @@ module.exports = function (options) {
   function html (file, build) {
     debug('parsing %s', utils.relative(file.path))
     let ast = parse5.parse(file.contents.toString())
-    let deps = extract(ast)
+    let dependencies = deps(ast)
     let tree = build.tree
 
-    debug('%d dependencies found:', deps.length)
-    deps
+    debug('%d dependencies found:', dependencies.length)
+    dependencies
       .filter(inspectDependency)
       .forEach(addDependency)
 
@@ -43,8 +44,9 @@ module.exports = function (options) {
     debug('> %s (%s)', dep.path, dep.type)
     if (isUrl(dep.path)) return false
     switch (dep.type) {
-      case 'script': return config.js
-      case 'stylesheet': return config.css
+      case 'script': return config.scripts
+      case 'stylesheet': return config.stylesheets
+      case 'img': return config.images
       default: return false
     }
   }

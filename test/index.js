@@ -37,6 +37,18 @@ describe('html plugin', function () {
     })
   })
 
+  it('should detect img dependencies', function () {
+    let runner = mako({ root: fixture('simple') }).use(html())
+    let entry = runner.tree.addFile(fixture('simple/index.html'))
+    entry.contents = fs.readFileSync(entry.path)
+
+    return runner.build(entry).then(function (build) {
+      let file = build.tree.findFile(entry.path)
+      let deps = file.dependencies().filter(file => file.type === 'png')
+      assert.lengthOf(deps, 1)
+    })
+  })
+
   it('should ignore absolute urls', function () {
     let runner = mako({ root: fixture('absolute-urls') }).use(html())
     let entry = runner.tree.addFile(fixture('absolute-urls/index.html'))
@@ -59,29 +71,43 @@ describe('html plugin', function () {
   })
 
   context('with options', function () {
-    describe('.css', function () {
-      it('should not add css dependencies', function () {
-        let runner = mako({ root: fixture('simple') }).use(html({ css: false }))
+    describe('.images', function () {
+      it('should not add img dependencies', function () {
+        let runner = mako({ root: fixture('simple') }).use(html({ images: false }))
         let entry = runner.tree.addFile(fixture('simple/index.html'))
         entry.contents = fs.readFileSync(entry.path)
 
         return runner.build(entry).then(function (build) {
           let file = build.tree.findFile(entry.path)
-          let deps = file.dependencies().filter(file => file.type === 'css')
+          let deps = file.dependencies().filter(file => file.type === 'png')
           assert.lengthOf(deps, 0)
         })
       })
     })
 
-    describe('.js', function () {
+    describe('.scripts', function () {
       it('should not add js dependencies', function () {
-        let runner = mako({ root: fixture('simple') }).use(html({ js: false }))
+        let runner = mako({ root: fixture('simple') }).use(html({ scripts: false }))
         let entry = runner.tree.addFile(fixture('simple/index.html'))
         entry.contents = fs.readFileSync(entry.path)
 
         return runner.build(entry).then(function (build) {
           let file = build.tree.findFile(entry.path)
           let deps = file.dependencies().filter(file => file.type === 'js')
+          assert.lengthOf(deps, 0)
+        })
+      })
+    })
+
+    describe('.stylesheets', function () {
+      it('should not add css dependencies', function () {
+        let runner = mako({ root: fixture('simple') }).use(html({ stylesheets: false }))
+        let entry = runner.tree.addFile(fixture('simple/index.html'))
+        entry.contents = fs.readFileSync(entry.path)
+
+        return runner.build(entry).then(function (build) {
+          let file = build.tree.findFile(entry.path)
+          let deps = file.dependencies().filter(file => file.type === 'css')
           assert.lengthOf(deps, 0)
         })
       })
