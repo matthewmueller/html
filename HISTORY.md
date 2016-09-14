@@ -1,4 +1,10 @@
 
+0.3.0 / 2016-09-13
+==================
+
+  * adding images support (fixes #7)
+  * making options more generic
+
 0.2.0 / 2016-09-05
 ==================
 
