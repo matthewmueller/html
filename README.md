@@ -1,13 +1,13 @@
 # mako-html
 
-> A mako plugin bundle for parsing HTML files for other front-end asset dependencies.
+> A [mako][mako] plugin bundle for parsing HTML files for other front-end asset dependencies.
 
-[![npm version](https://img.shields.io/npm/v/mako-html.svg)](https://www.npmjs.com/package/mako-html)
-[![build status](https://img.shields.io/travis/makojs/html.svg)](https://travis-ci.org/makojs/html)
-[![coverage](https://img.shields.io/coveralls/makojs/html.svg)](https://coveralls.io/github/makojs/html)
-[![npm dependencies](https://img.shields.io/david/makojs/html.svg)](https://david-dm.org/makojs/html)
-[![npm dev dependencies](https://img.shields.io/david/dev/makojs/html.svg)](https://david-dm.org/makojs/html#info=devDependencies)
-[![code style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![npm version][npm-badge]][npm]
+[![build status][travis-badge]][travis]
+[![coverage][coveralls-badge]][coveralls]
+[![npm dependencies][david-badge]][david]
+[![npm dev dependencies][david-dev-badge]][david-dev]
+[![code style][standard-badge]][standard]
 
 ## Purpose
 
@@ -33,3 +33,18 @@ Initializes the plugin, available `options` include:
  - `images` whether or not to process image dependencies (default: `true`)
  - `stylesheets` whether or not to process stylesheet dependencies (default: `true`)
  - `scripts` whether or not to process script dependencies (default: `true`)
+
+
+[mako]: https://github.com/makojs/core
+[coveralls]: https://coveralls.io/github/makojs/html
+[coveralls-badge]: https://img.shields.io/coveralls/makojs/html.svg
+[david]: https://david-dm.org/makojs/html
+[david-badge]: https://img.shields.io/david/makojs/html.svg
+[david-dev]: https://david-dm.org/makojs/html#info=devDependencies
+[david-dev-badge]: https://img.shields.io/david/dev/makojs/html.svg
+[npm]: https://www.npmjs.com/package/mako-html
+[npm-badge]: https://img.shields.io/npm/v/mako-html.svg
+[standard]: http://standardjs.com/
+[standard-badge]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
+[travis]: https://travis-ci.org/makojs/html
+[travis-badge]: https://img.shields.io/travis/makojs/html.svg
