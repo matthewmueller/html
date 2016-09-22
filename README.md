@@ -7,6 +7,7 @@
 [![coverage][coveralls-badge]][coveralls]
 [![npm dependencies][david-badge]][david]
 [![npm dev dependencies][david-dev-badge]][david-dev]
+[![nsp status][nsp-badge]][nsp]
 [![code style][standard-badge]][standard]
 
 ## Purpose
@@ -35,16 +36,18 @@ Initializes the plugin, available `options` include:
  - `scripts` whether or not to process script dependencies (default: `true`)
 
 
-[mako]: https://github.com/makojs/core
-[coveralls]: https://coveralls.io/github/makojs/html
 [coveralls-badge]: https://img.shields.io/coveralls/makojs/html.svg
-[david]: https://david-dm.org/makojs/html
+[coveralls]: https://coveralls.io/github/makojs/html
 [david-badge]: https://img.shields.io/david/makojs/html.svg
-[david-dev]: https://david-dm.org/makojs/html#info=devDependencies
 [david-dev-badge]: https://img.shields.io/david/dev/makojs/html.svg
-[npm]: https://www.npmjs.com/package/mako-html
+[david-dev]: https://david-dm.org/makojs/html#info=devDependencies
+[david]: https://david-dm.org/makojs/html
+[mako]: https://github.com/makojs/core
 [npm-badge]: https://img.shields.io/npm/v/mako-html.svg
-[standard]: http://standardjs.com/
+[npm]: https://www.npmjs.com/package/mako-html
+[nsp-badge]: https://nodesecurity.io/orgs/mako/projects/82eb54b2-99dd-4cdc-a487-5917cd9d5e84/badge
+[nsp]: https://nodesecurity.io/orgs/mako/projects/82eb54b2-99dd-4cdc-a487-5917cd9d5e84
 [standard-badge]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
-[travis]: https://travis-ci.org/makojs/html
+[standard]: http://standardjs.com/
 [travis-badge]: https://img.shields.io/travis/makojs/html.svg
+[travis]: https://travis-ci.org/makojs/html
