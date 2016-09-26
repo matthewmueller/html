@@ -17,7 +17,7 @@
     "deps-html": "^2.2.0",
     "is-url": "^1.2.1",
     "mako-utils": "^1.0.0",
-    "parse5-utils": "^1.4.1"
+    "parse5-utils": "^2.0.0"
   },
   "devDependencies": {
     "chai": "^3.4.0",
