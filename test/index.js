@@ -2,14 +2,12 @@
 
 'use strict'
 
-let chai = require('chai')
+let assert = require('chai').assert
 let fs = require('fs')
 let html = require('..')
 let mako = require('mako')
 let path = require('path')
 
-chai.use(require('chai-as-promised'))
-let assert = chai.assert
 let fixture = path.resolve.bind(path, __dirname, 'fixtures')
 
 describe('html plugin', function () {
