@@ -40,5 +40,8 @@
     "ignore": [
       "test/fixtures/**"
     ]
+  },
+  "greenkeeper": {
+    "label": "chore"
   }
 }
