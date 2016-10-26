@@ -1,16 +1,18 @@
 sudo: false
 language: node_js
 node_js:
-- stable
-- 4
+  - 7
+  - 6
+  - 5
+  - 4
 install:
-- npm prune
-- npm update
+  - npm prune
+  - npm update
 after_success:
-- npm run coveralls
+  - npm run coveralls
 cache:
   directories:
-  - node_modules
+    - node_modules
 deploy:
   provider: npm
   email: dominic@dbarnes.info
@@ -19,4 +21,4 @@ deploy:
   on:
     tags: true
     repo: makojs/html
-    node: stable
+    node: 6
