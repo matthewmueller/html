@@ -33,6 +33,7 @@ module.exports = function (options) {
 
     function addDependency (dep) {
       debug('+ %s (%s)', dep.path, dep.type)
+      if (!dep.path) return
       let abs = path.resolve(file.dirname, dep.path)
       let depFile = tree.findFile(abs)
       if (!depFile) depFile = tree.addFile(abs)

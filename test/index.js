@@ -58,6 +58,17 @@ describe('html plugin', function () {
     })
   })
 
+  it('should ignore scripts without a source', function () {
+    let runner = mako({ root: fixture('inline-script') }).use(html())
+    let entry = runner.tree.addFile(fixture('inline-script/index.html'))
+    entry.contents = fs.readFileSync(entry.path)
+
+    return runner.build(entry).then(function (build) {
+      let file = build.tree.findFile(entry.path)
+      assert.lengthOf(file.dependencies(), 0)
+    })
+  })
+
   it('should only add dependencies once', function () {
     let runner = mako({ root: fixture('duplicate') }).use(html())
     let entry = runner.tree.addFile(fixture('duplicate/index.html'))
